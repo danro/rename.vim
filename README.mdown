@@ -5,6 +5,7 @@ Git branch of http://www.vim.org/scripts/script.php?script_id=1928
 
 Copyright June 2007 by Christian J. Robinson (infynity@onewest.net)  
 Updated August 2011 by Dan Rogers (dan@danro.net)  
+Updated February 2013 by Ben Lovell (@benlovell)
 
 Distributed under the terms of the Vim license.  See ":help license".
 
@@ -13,6 +14,7 @@ Changes
 
  * Now retains path relative to global current directory.
  * Added lowercase "rename" alias.
+ * Now respects multi-byte chars in the target filename.
 
 Usage:
 ------
