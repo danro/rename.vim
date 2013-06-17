@@ -26,7 +26,7 @@ function! Rename(name, bang)
 		let l:oldfile = l:curfile
 		let l:curfile = expand("%:p")
 		if l:curfile !=# l:oldfile && filewritable(l:curfile)
-			silent exe "bwipe! " . fnameescape(l:oldfile))
+			silent exe "bwipe! " . fnameescape(l:oldfile)
 			if delete(l:oldfile)
 				echoerr "Could not delete " . l:oldfile
 			endif
