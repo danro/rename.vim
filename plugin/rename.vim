@@ -2,6 +2,7 @@
 "
 " Copyright June 2007 by Christian J. Robinson <infynity@onewest.net>
 " Updated August 2011 by Dan Rogers <dan@danro.net>
+" Updated June 2013 by Alexandre Fonseca <alexandrejorgefonseca@gmail.com>
 "
 " Distributed under the terms of the Vim license.  See ":help license".
 "
@@ -9,19 +10,25 @@
 "
 " :rename[!] {newname}
 
-command! -nargs=* -complete=file -bang Rename :call Rename("<args>", "<bang>")
+command! -nargs=* -complete=customlist,SiblingFiles -bang Rename :call Rename("<args>", "<bang>")
 cabbrev rename <c-r>=getcmdpos() == 1 && getcmdtype() == ":" ? "Rename" : "rename"<CR>
+
+function! SiblingFiles(A, L, P)
+	return map(split(globpath(expand("%:h") . "/", a:A . "*"), "\n"), 'fnamemodify(v:val, ":t")')
+endfunction
 
 function! Rename(name, bang)
 	let l:curfile = expand("%:p")
-  let l:curpath = expand("%:h") . "/"
+	let l:curpath = expand("%:h") . "/"
 	let v:errmsg = ""
-	silent! exe "saveas" . a:bang . " " . l:curpath . a:name
+	silent! exe "saveas" . a:bang . " " . fnameescape(l:curpath . a:name)
 	if v:errmsg =~# '^$\|^E329'
-		if expand("%:p") !=# l:curfile && filewritable(expand("%:p"))
-			silent exe "bwipe! " . l:curfile
-			if delete(l:curfile)
-				echoerr "Could not delete " . l:curfile
+		let l:oldfile = l:curfile
+		let l:curfile = expand("%:p")
+		if l:curfile !=# l:oldfile && filewritable(l:curfile)
+			silent exe "bwipe! " . fnameescape(l:oldfile)
+			if delete(l:oldfile)
+				echoerr "Could not delete " . l:oldfile
 			endif
 		endif
 	else
