@@ -34,4 +34,19 @@ function! Rename(name, bang)
 	else
 		echoerr v:errmsg
 	endif
+
+    if exists(":NERDTree")
+        if g:NERDTree.IsOpen()
+            let window_number = winnr()
+            let line_number = winline()
+            execute "NERDTreeFocus"
+            execute "normal R"
+            execute window_number "wincmd w"
+            execute line_number
+        else
+            execute "NERDTreeToggle"
+            execute "normal R"
+            execute "NERDTreeToggle"
+        endif
+    endif
 endfunction
