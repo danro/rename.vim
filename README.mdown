@@ -13,6 +13,7 @@ Changes
 
  * Now retains path relative to global current directory.
  * Added lowercase "rename" alias.
+ * Supports updating NERDTree if installed
 
 Usage:
 ------
