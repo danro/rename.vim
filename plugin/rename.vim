@@ -22,7 +22,7 @@ function! Rename(name, bang)
 	let l:curpath = expand("%:h") . "/"
 	let v:errmsg = ""
 	silent! exe "saveas" . a:bang . " " . fnameescape(l:curpath . a:name)
-	if v:errmsg =~# '^$\|^E329'
+	if v:errmsg =~# '^$\|^E329\|^E486'
 		let l:oldfile = l:curfile
 		let l:curfile = expand("%:p")
 		if l:curfile !=# l:oldfile && filewritable(l:curfile)
